@@ -1,0 +1,14 @@
+# vscodeのローカル依存な設定ファイルを無視
+*.code-workspace
+
+# .env系は無視(各人が持つログイン情報等記載させるため)
+*.env
+
+# gigalixir_clientで使うssh_keyをすべて無視
+ssh_keys/*
+
+# ログファイル系をすべて無視
+*.log
+
+# schemaspyの出力結果をすべて無視
+schemaspy/output/*

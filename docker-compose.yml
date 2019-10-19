@@ -1,0 +1,92 @@
+version: "3.4"
+
+services:
+
+  liveview:
+    build:
+      context: ./liveview
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - "./liveview:/root/liveview"
+    working_dir: "/root/liveview"
+    command: ["mix", "phx.server"]
+    depends_on:
+      - pgweb
+      - mongo-express
+
+  postgres:
+    image: postgres:11-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql-data:/var/lib/postgresql
+    environment:
+      - "TZ=Asia/Tokyo"
+      - "POSTGRES_INITDB_ARGS='--lc-collate=ja_JP.utf8' '--lc-ctype=ja_JP.utf8'"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_HOST=postgres"
+
+  pgweb:
+    image: donnex/pgweb
+    ports:
+      - "18080:8080"
+    command: ["-s", "--bind=0.0.0.0", "--listen=8080", "--host=postgres", "--ssl=disable", "--user=postgres", "--pass=postgres"]
+    depends_on:
+      - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:8080 || exit 1"]
+      retries: 3
+      timeout: "5s"
+      interval: "60s"
+
+  mongo:
+    image: mongo:4.1.13-bionic
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+
+  mongo-express:
+    image: mongo-express:0.49.0
+    ports:
+      - "18081:8081"
+    environment:
+      - "ME_CONFIG_MONGODB_PORT=27017"
+      - "ME_CONFIG_MONGODB_SERVER=mongo"
+    depends_on:
+      - mongo
+
+  gigalixir-client:
+    build:
+      context: ./gigalixir_client
+      dockerfile: Dockerfile
+    volumes:
+      - "./ssh_keys:/root/.ssh"
+      - "./liveview:/root/liveview"
+    env_file:
+      - env_files/gigalixir_login.env
+    working_dir: "/root/liveview"
+
+  schemaspy:
+    image: "schemaspy/schemaspy:snapshot"
+    volumes:
+      - "./schemaspy/output:/output"
+    command: ["-host", "postgres:5432", "-t", "pgsql", "-db", "rot_raven_liveview_dev", "-u", "postgres", "-p", "postgres"]
+    depends_on:
+      - postgres
+
+  grpc:
+    build:
+      context: ./grpc
+      dockerfile: Dockerfile
+
+volumes:
+
+  postgresql-data:
+    driver: local
+
+  mongodb-data:
+    driver: local
