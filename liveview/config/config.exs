@@ -30,7 +30,7 @@ config :phoenix, :json_library, Jason
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
 
-config :my_app, MyAppWeb.Endpoint,
+config :rot_raven, RotRavenWeb.Endpoint,
   live_view: [
-    signing_salt: "SECRET_SALT"
+    signing_salt: "9O3HAwDr4sLLnHcIpn8CERn8O/e/JZFW"
   ]
