@@ -36,7 +36,7 @@ defmodule RotRaven.MixProject do
       {:phoenix, "~> 1.4.10"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_live_view, git: "https://github.com/phoenixframework/phoenix_live_view.git", branch: "master"},
+      {:phoenix_live_view, git: "https://github.com/phoenixframework/phoenix_live_view.git", tag: "v0.3.1"},
       {:floki, ">= 0.0.0", only: :test},
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
