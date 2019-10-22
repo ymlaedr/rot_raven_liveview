@@ -78,11 +78,6 @@ services:
     depends_on:
       - postgres
 
-  grpc:
-    build:
-      context: ./grpc
-      dockerfile: Dockerfile
-
 volumes:
 
   postgresql-data:
