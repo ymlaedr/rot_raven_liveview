@@ -4,6 +4,7 @@ defmodule RotRaven.Application do
   @moduledoc false
 
   use Application
+  import Supervisor.Spec
 
   def start(_type, _args) do
     # List all child processes to be supervised
@@ -11,9 +12,18 @@ defmodule RotRaven.Application do
       # Start the Ecto repository
       RotRaven.Repo,
       # Start the endpoint when the application starts
-      RotRavenWeb.Endpoint
+      RotRavenWeb.Endpoint,
       # Starts a worker by calling: RotRaven.Worker.start_link(arg)
       # {RotRaven.Worker, arg},
+      worker(Mongo, [
+        [
+          name: :mongo,
+          hostname: :mongo,
+          port: 27017,
+          database: "rot_raven_liveview",
+          pool_size: 2
+        ]
+      ])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

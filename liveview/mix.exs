@@ -20,7 +20,7 @@ defmodule RotRaven.MixProject do
   def application do
     [
       mod: {RotRaven.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :mongodb]
     ]
   end
 
@@ -36,7 +36,7 @@ defmodule RotRaven.MixProject do
       {:phoenix, "~> 1.4.10"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_live_view, git: "https://github.com/phoenixframework/phoenix_live_view.git", tag: "v0.3.1"},
+      {:phoenix_live_view, git: "https://github.com/phoenixframework/phoenix_live_view.git", ref: "f12de27"},
       {:floki, ">= 0.0.0", only: :test},
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
@@ -44,7 +44,9 @@ defmodule RotRaven.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:mongodb, "~> 0.5.1"},
+      {:poison, "~> 4.0.1"}
     ]
   end
 
