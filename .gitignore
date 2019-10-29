@@ -12,3 +12,5 @@ ssh_keys/*
 
 # schemaspyの出力結果をすべて無視
 schemaspy/output/*
+
+.npm
