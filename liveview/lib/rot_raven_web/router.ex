@@ -18,6 +18,8 @@ defmodule RotRavenWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/vehicle/gps", GpsRecord
   end
 
   # Other scopes may use custom stacks.
