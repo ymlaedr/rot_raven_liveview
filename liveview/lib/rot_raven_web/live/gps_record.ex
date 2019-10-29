@@ -37,8 +37,16 @@ defmodule RotRavenWeb.GpsRecord do
       <%= for record <- @records do %>
       <tr>
         <td><%= record["timestamp"] %></td>
-        <td><%= record["latitude"] %></td>
-        <td><%= record["longitude"] %></td>
+        <td>
+          <a href="https://www.google.com/maps?q=<%= record["latitude"] %>,<%= record["longitude"] %>" target="_blank">
+            <%= record["latitude"] %>
+          </a>
+        </td>
+        <td>
+          <a href="https://www.google.com/maps?q=<%= record["latitude"] %>,<%= record["longitude"] %>" target="_blank">
+            <%= record["longitude"] %>
+          </a>
+        </td>
         <td><%= record["altitude"] %></td>
         <td><%= record["accuracy"] %></td>
         <td><%= record["altitude_accuracy"] %></td>
@@ -76,7 +84,7 @@ defmodule RotRavenWeb.GpsRecord do
                 heading: position.coords.heading,
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
-                speed: position.coords.speed,
+                speed: position.coords.speed * 60 * 60 / 1000,
                 speed_measurement: (position.coords.speed === null) ? "hybeni" : "sensor"
               };
               records[records.length] = coords;
