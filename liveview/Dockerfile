@@ -38,6 +38,13 @@ RUN apk \
       --virtual execute-phoenix-livereload-dependencies \
         inotify-tools
 
+RUN apk \
+      add \
+      --update \
+      --no-cache \
+      --virtual \
+        git
+
 # phoenixのセットアップ
 RUN mix local.hex --force
 RUN mix local.rebar --force
