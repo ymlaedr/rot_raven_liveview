@@ -35,14 +35,14 @@ RUN apk \
       add \
       --update \
       --no-cache \
-      --virtual execute-phoenix-livereload-dependencies \
+      --virtual .execute-phoenix-livereload-dependencies \
         inotify-tools
 
 RUN apk \
       add \
       --update \
       --no-cache \
-      --virtual \
+      --virtual .execute-elixir-depsget-dependencies \
         git
 
 # phoenixのセットアップ
